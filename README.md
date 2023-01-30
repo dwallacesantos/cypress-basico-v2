@@ -1,29 +1,29 @@
-# Testes automatizados com Cypress - Básico
+# cypress básico
 
-👋 Seja bem-vindo(a)!
+Projeto de testes com cypress utilizando como referência o curso de [`cypress básico`](https://www.udemy.com/course/testes-automatizados-com-cypress-basico) 
 
-É muito bom tê-lo(a) aqui. Tenho certeza que você vai adorar este curso. ❤️
+## Pré-requisitos
 
-## O que você vai aprender
+* node 18.13.0
+* npm 8.19.3
+* cypress 12.4.0
+* faker 7.6.0
 
-Durante o curso de testes automatizados com Cypress (básico), você vai aprender:
+## Instalação
 
-- Como configurar um projeto Cypress do zero
-- Como visitar páginas locais e remotas
-- Como lidar com os elementos mais comuns encontrados em aplicações web
-- Como testar _upload_ de arquivos
-- Como realizar as mais diversas verificações de resultados esperados
-- Como criar comandos customizados
-- Como lidar com links que abrem em outra aba do navegador
-- Como rodar testes simulando as dimensões de um dispositivo móvel
-- Como resolver os mesmos problemas de diferentes formas, conhecendo a [API do Cypress](https://docs.cypress.io/api/table-of-contents)
-- Como executar os testes em um _pipeline_ de integração contínua sempre que mudanças ocorrerem no código da aplicação (ou dos testes)
-- Como criar uma documentação mínima para seu projeto de testes automatizados
+Run `npm install`
 
-## Vamos começar?
+## Testes
 
-Vá para a seção [estrutura do curso](./lessons/_course-structure_.md).
+### headless mode
 
+Run `npm test`
+
+### Interactive mode
+
+Run `npm run cy:open`
+> Nesse caso será usado o seguinte parametro para viewport `--config viewportWidth=1280 viewportHeight=880`
+
+Run `npm run cy:open:mobile`
+> Nesse caso será usado o seguinte parametro para viewport `--config viewportWidth=370 viewportHeight=660`
 ___
-
-Este é mais um curso da [**Escola Talking About Testing**](https://udemy.com/user/walmyr).
