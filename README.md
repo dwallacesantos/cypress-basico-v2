@@ -1,4 +1,4 @@
-# cypress básico
+# cypress-basico-v2
 
 Projeto de testes com cypress utilizando como referência o curso de [`cypress básico`](https://www.udemy.com/course/testes-automatizados-com-cypress-basico) 
 
