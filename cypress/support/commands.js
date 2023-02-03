@@ -4,7 +4,7 @@ Cypress.Commands.add('fillRequiredFields', user => {
     cy.get('#firstName').type(user.firstName, options)
     cy.get('#lastName').type(user.lastName, options)
     cy.get('#email').type(user.email, options)
-    cy.get('#open-text-area').type(user.text, options)
+    cy.get('#open-text-area').invoke('val', user.text)
 });
 
 

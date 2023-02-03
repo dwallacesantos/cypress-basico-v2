@@ -14,6 +14,8 @@ describe('Central de Atendimento ao Cliente TAT', () => {
     const SUCCESS_MESSAGE = 'Mensagem enviada com sucesso.'
     const ERROR_REQUIRED_FIELDS = 'Valide os campos obrigatórios!'
 
+    const MESSAGE_VISIBLE_TIME = 3000;
+
 
     beforeEach(() => {
         cy.visit('./src/index.html')
@@ -24,9 +26,12 @@ describe('Central de Atendimento ao Cliente TAT', () => {
     })
 
     it('verify the success message when required fields are fill', () => {
+        cy.clock()
         cy.fillRequiredFields(user)
         cy.get('.button').click()
         cy.get('.success').should('be.visible').contains(SUCCESS_MESSAGE)
+        cy.tick(MESSAGE_VISIBLE_TIME)
+        cy.get('.success').should('not.be.visible')
     })
 
 
@@ -63,12 +68,17 @@ describe('Central de Atendimento ao Cliente TAT', () => {
 
     context('checkbox validation', () => {
 
+        Cypress._.times(2, () => {
         it('verify if phone input is required when check phone option', () => {
+            cy.clock()
             cy.fillRequiredFields(user)
             cy.get('#phone-checkbox').check()
             cy.get('.button').click()
             cy.get('.error').should('be.visible').contains(ERROR_REQUIRED_FIELDS)
-        })
+            
+            cy.tick(MESSAGE_VISIBLE_TIME)
+            cy.get('.success').should('not.be.visible')
+        })})
 
         it('verify if uncheck phone option the phone input stop being required', () => {
             cy.get('#check input')
@@ -101,6 +111,23 @@ describe('Central de Atendimento ao Cliente TAT', () => {
             })
     })
 
+    it('verify messages', () => {
+        cy.get('.success')
+          .should('not.be.visible')
+          .invoke('show')
+          .should('be.visible')
+          .and('contain', 'Mensagem enviada com sucesso.')
+          .invoke('hide')
+          .should('not.be.visible')
+        cy.get('.error')
+          .should('not.be.visible')
+          .invoke('show')
+          .should('be.visible')
+          .and('contain', 'Valide os campos obrigatórios!')
+          .invoke('hide')
+          .should('not.be.visible')
+      })
+
     context('privacy policy redirect', () => {
 
         it('verify the link target', () => {
@@ -112,14 +139,17 @@ describe('Central de Atendimento ao Cliente TAT', () => {
                 .title().should('eq', 'Central de Atendimento ao Cliente TAT - Política de privacidade')
         })
     })
+
+    it('verify online page', () => {
+        cy.request('GET', 'https://cac-tat.s3.eu-central-1.amazonaws.com/index.html').then((resp) => {
+            const { status, body } = resp
+            expect(status).to.eq(200)
+            expect(body).contain('CAC TAT')
+        })
+    });
+
+    it('verify hidden cat', () => {
+        cy.get('#cat').invoke('show').should('be.visible')
+        cy.get('#title').invoke('text', 'CAT TAT')
+    });
 })
-
-function fillRequiredFields(user) {
-
-    const options = { delay: 0 }
-
-    this.getFirstName().type(user.firstName, options)
-    this.getLastName().type(user.lastName, options)
-    this.getEmail().type(user.email, options)
-    this.getHowCanIHelp().type(user.text, options)
-}
